@@ -4,8 +4,12 @@
   "description": "leaning mern ",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "nodemon index.js",
      "build":"npm i"
+=======
+    "start": "node index.js"
+>>>>>>> 5f002b486e93b72a8de5692912e1e5247fa90739
   },
   "author": "Praveen kumar G",
   "license": "ISC",
