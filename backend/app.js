@@ -6,16 +6,22 @@ const notesRouter = require("./routes/notesRouter");
 const cors = require("cors");
 // app.use(cors());
 app.use(
-  cors({
-    origin: ["http://localhost:3000", "http://192.168.250.171:3000"],
-  })
+  cors()
 );
 // available routes
 // middleware to parse the incoming json body\
 app.use(express.json());
 app.use("/api/user", userRouter);
 app.use("/api/notes", notesRouter);
-
+app.use("/").get((req, res, next) => {
+  res.status(200).json({
+    status: "success",
+    data: {
+      info: "you created successfully",
+    },
+  });
+  next();
+});
 app.use(globalErrorHandling);
 
 module.exports = app;
