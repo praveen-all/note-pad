@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import noteContext from "../context/notes/noteContext";
+import Spinner from "./Spinner";
 
 export default function SignUp(props) {
   const navigate = useNavigate();
+  const {setUser,load,SetLoad}=useContext(noteContext);
   const [credentail, setCredential] = useState({
     email: "",
     name: "",
@@ -11,31 +14,44 @@ export default function SignUp(props) {
   });
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    const {name,email,password}=credentail;
-    const res = await fetch(`http://127.0.0.1:5000/api/user/createUser`, {
-      method: "POST",
-      body: JSON.stringify({
-       name,email,password
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    let response = await res.json();
-    if (response.status === "success") {
-      props.showAlert('singUp successfully','success');
-      localStorage.setItem("token", response.token);
-      navigate("/");
-    } else {
-      props.showAlert(' something went to wrong','danger');
+    SetLoad(true);
+    const {name,email,password,ConfirmPassword}=credentail;
+    if(password===ConfirmPassword){
+      const res = await fetch(`http://127.0.0.1:5000/api/user/createUser`, {
+        method: "POST",
+        body: JSON.stringify({
+         name,email,password
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let response = await res.json();
+      
+      SetLoad(false);
+      if (response.status === "success") {
+        props.showAlert('singUp successfully','success');
+        localStorage.setItem("token", response.data.token);
+        setUser(response.user);
+        navigate("/");
+      } else {
+        props.showAlert(' something went to wrong','danger');
+      }
+    }else{
+      props.showAlert('password missmatch☺️☺️','danger');
+      SetLoad(false);
     }
+   
   };
 
   const onChange = (e) => {
     setCredential({ ...credentail, [e.target.name]: e.target.value });
   };
   return (
+
     <div className="container" >
+     { load&&<Spinner/>}
+
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
@@ -95,7 +111,6 @@ export default function SignUp(props) {
             minLength={8}
           />
         </div>
-
         <button type="submit" className="btn btn-primary">
           Sign Up
         </button>

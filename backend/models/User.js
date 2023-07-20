@@ -39,5 +39,5 @@ UserSchema.methods.comparePassword=async function(candidatePassword,Userpassword
     return await bcryptjs.compare(candidatePassword,Userpassword);
 }
 const User=mongoose.model('User',UserSchema);
-// User.createIndexes();
+User.createIndexes();
 module.exports=User;

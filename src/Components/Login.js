@@ -1,11 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState ,useContext} from "react";
+import { useNavigate  } from "react-router-dom";
+import noteContext from "../context/notes/noteContext";
+import Spinner from "./Spinner";
 export default function Login(props) {
   const navigate = useNavigate();
+  const {load,SetLoad}=useContext(noteContext);
+  
   const [credentail, setCredential] = useState({ email: "", password: "" });
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(`http://127.0.0.1:5000/api/user/login/`, {
+    SetLoad(true)
+    try {
+      const res = await fetch(`http://127.0.0.1:5000/api/user/login/`, {
       method: "POST",
       body: JSON.stringify({
         email: credentail.email,
@@ -16,12 +22,15 @@ export default function Login(props) {
       },
     });
     let response = await res.json();
+    SetLoad(false);
     if (response.status === "success") {
       props.showAlert('login successfully','success');
-      localStorage.setItem("token", response.token);
+      localStorage.setItem("token", response.data.token);
       navigate("/");
     } else {
-      // alert("incorrect credentail");
+      props.showAlert(response.data.message,'danger');
+    }
+    } catch (error) {
       props.showAlert('Invalide Credential','danger');
     }
   };
@@ -31,6 +40,7 @@ export default function Login(props) {
   };
   return (
     <div>
+      {load&&<Spinner/>}
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">

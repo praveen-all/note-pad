@@ -3,12 +3,14 @@ const Notes = require("./../models/Notes");
 const catchAsync = require("./../utilities/cathasync");
 
 exports.getllAllNotes = catchAsync(async (req, res, next) => {
-  const notes = await Notes.find({ user: req.user._id }); //find the allthe notes of user id
+  const notes = await Notes.find({ user: req.user._id }); 
+  //find the allthe notes of user id
   res.status(200).json({
     status: "success",
     data: {
       notes,
     },
+    user:req.user,
   });
 });
 
