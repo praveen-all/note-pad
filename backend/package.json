@@ -4,7 +4,7 @@
   "description": "leaning mern ",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "build": "npm i"
   },
   "author": "Praveen kumar G",
