@@ -6,7 +6,7 @@ const NoteState = (props) => {
   const fetchallNotes=async()=>{
    SetLoad(true);
     
-    try{const res=await fetch('http://127.0.0.1:5000/api/notes',{
+    try{const res=await fetch('https://notebackend-54yd.onrender.com/api/notes',{
       method:'GET',
       headers:{
         'Content-Type':'application/json',
@@ -27,7 +27,7 @@ const NoteState = (props) => {
   // add note
   const addNote = async(title, description, tag) => {
   SetLoad(true)
-    const res=await fetch('http://127.0.0.1:5000/api/notes/createnote',{
+    const res=await fetch('https://notebackend-54yd.onrender.com/api/notes/createnote',{
       method:'POST',
       body:JSON.stringify({title,description,tag}),
       headers:{
@@ -43,7 +43,7 @@ const NoteState = (props) => {
   // delete note
   const deleteNote = async(id) => {
     SetLoad(true);
-   await fetch(`http://127.0.0.1:5000/api/notes/deleteNote/${id}`,{
+   await fetch(`https://notebackend-54yd.onrender.com/api/notes/deleteNote/${id}`,{
       method:'DELETE',
       headers:{
         'Content-Type':'application/json',
@@ -62,7 +62,7 @@ const NoteState = (props) => {
     SetLoad(true);
   
 
-    const res=await fetch(`http://127.0.0.1:5000/api/notes/updateNote/${id}`,{
+    const res=await fetch(`https://notebackend-54yd.onrender.com/api/notes/updateNote/${id}`,{
       method:'PATCH',
       
       body:JSON.stringify({title,description,tag}),
