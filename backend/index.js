@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const path=require('path');
 const app = require("./app");
-dotenv.config({ path: path.join(__dirname,'config.env') });
+dotenv.config();
 const db =  process.env.MONGO_URL;
 
 mongoose
