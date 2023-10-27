@@ -17,7 +17,7 @@ export default function SignUp(props) {
     SetLoad(true);
     const {name,email,password,ConfirmPassword}=credentail;
     if(password===ConfirmPassword){
-      const res = await fetch(`http://127.0.0.1:5000/api/user/createUser`, {
+      const res = await fetch(`https://notebackend-54yd.onrender.com/api/user/createUser`, {
         method: "POST",
         body: JSON.stringify({
          name,email,password
