@@ -11,7 +11,7 @@ export default function Login(props) {
     e.preventDefault();
     SetLoad(true)
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/user/login/`, {
+      const res = await fetch(`https://notebackend-54yd.onrender.com/api/user/login/`, {
       method: "POST",
       body: JSON.stringify({
         email: credentail.email,
